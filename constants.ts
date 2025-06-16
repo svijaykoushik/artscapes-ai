@@ -1,3 +1,4 @@
+
 import { Wallpaper, NavItem, WallpaperCollection } from './types';
 import { HomeIcon, InformationCircleIcon, CodeBracketIcon, CollectionIcon as NavCollectionIcon, TagIcon } from './components/Icons'; // Renamed CollectionIcon to avoid conflict
 
@@ -8,7 +9,7 @@ export const NAV_LINKS: NavItem[] = [
   { label: 'Collections', path: '/collections-overview', icon: NavCollectionIcon },
   { label: 'Browse Tags', path: '/tags', icon: TagIcon }, // New link for tags page
   { label: 'About', path: '/about', icon: InformationCircleIcon },
-  { label: 'GitHub', path: 'https://github.com/your-username/artscapes-ai', icon: CodeBracketIcon },
+  { label: 'GitHub', path: 'https://github.com/svijaykoushik/artscapes-ai/', icon: CodeBracketIcon },
 ];
 
 export const WALLPAPERS: Wallpaper[] = [
@@ -200,6 +201,8 @@ export const WALLPAPER_COLLECTIONS: WallpaperCollection[] = [
     coverWallpaperId: '1', // Cosmic Reef
     wallpaperIds: ['1', '7', '10', '16'],
     tags: ['Space', 'Galaxy', 'Exploration', 'Abstract'],
+    zipUrl: 'https://example.com/zips/cosmic_wonders.zip', // Placeholder
+    zipSizeMB: 42, // Placeholder
   },
   {
     id: 'col2',
@@ -209,6 +212,8 @@ export const WALLPAPER_COLLECTIONS: WallpaperCollection[] = [
     coverWallpaperId: '2', // Cybernetic Bloom
     wallpaperIds: ['2', '4', '14'],
     tags: ['Cyberpunk', 'Sci-Fi', 'Futuristic', 'Neon', 'Urban'],
+    zipUrl: 'https://example.com/zips/cyberpunk_visions.zip', // Placeholder
+    zipSizeMB: 28, // Placeholder
   },
   {
     id: 'col3',
@@ -218,6 +223,8 @@ export const WALLPAPER_COLLECTIONS: WallpaperCollection[] = [
     coverWallpaperId: '5', // Enchanted Forest Path
     wallpaperIds: ['3', '5', '9'],
     tags: ['Fantasy', 'Mystical', 'Nature', 'Landscape'],
+    zipUrl: 'https://example.com/zips/enchanted_realms.zip', // Placeholder
+    zipSizeMB: 35, // Placeholder
   },
   {
     id: 'col4',
@@ -227,5 +234,7 @@ export const WALLPAPER_COLLECTIONS: WallpaperCollection[] = [
     coverWallpaperId: '11', // Vertical Dreams
     wallpaperIds: ['4', '11', '13'],
     tags: ['Portrait', 'Mobile', 'Vertical'],
+    zipUrl: 'https://example.com/zips/portrait_perspectives.zip', // Placeholder
+    zipSizeMB: 15, // Placeholder
   }
 ];

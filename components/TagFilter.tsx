@@ -1,7 +1,6 @@
-
 import React from 'react';
 import TagPill from './TagPill';
-import { FilterIcon } from './Icons';
+// FilterIcon is removed as the heading is removed
 
 interface TagFilterProps {
   allTags: string[];
@@ -16,28 +15,30 @@ const TagFilter: React.FC<TagFilterProps> = ({ allTags, activeTags, onTagClick, 
   }
 
   return (
-    <div className="mb-6 p-4 bg-secondary-lt dark:bg-secondary border border-border-light dark:border-border-dark">
-      <div className="flex items-center mb-3">
-        <FilterIcon className="w-5 h-5 mr-2 text-text-lt dark:text-light-text" />
-        <h3 className="text-lg font-semibold text-text-lt dark:text-light-text">Filter by Tags</h3>
-        {activeTags.length > 0 && (
+    <div className="mb-6 py-3 px-1 sm:px-2 border-y border-border-light dark:border-border-dark">
+      {activeTags.length > 0 && (
+        <div className="flex justify-end mb-2 px-2 sm:px-0">
           <button
             onClick={onClearFilters}
-            className="ml-auto text-sm text-accent dark:text-accent-lt hover:underline"
+            className="text-xs sm:text-sm text-accent dark:text-accent-lt hover:underline"
+            aria-label="Clear all active tag filters"
           >
             Clear Filters
           </button>
-        )}
-      </div>
-      <div className="flex flex-wrap">
+        </div>
+      )}
+      <div className="flex overflow-x-auto whitespace-nowrap pb-2 -mb-2 scrollbar-thin scrollbar-thumb-accent dark:scrollbar-thumb-accent-lt scrollbar-track-secondary-lt dark:scrollbar-track-secondary pr-4 pl-2 sm:pl-0"> 
+        {/* pl-2 sm:pl-0 ensures some padding on small screens if container px is less */}
         {allTags.map(tag => (
           <TagPill
             key={tag}
             tag={tag}
             onClick={onTagClick}
             isActive={activeTags.includes(tag)}
+            className="flex-shrink-0 mr-1.5 last:mr-0" 
           />
         ))}
+        {allTags.length === 0 && <p className="text-sm text-muted-text-lt dark:text-muted-text px-2 sm:px-0">No tags available.</p>}
       </div>
     </div>
   );

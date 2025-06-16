@@ -39,9 +39,6 @@ const CollectionPage: React.FC = () => {
       }, 50);
       return () => clearTimeout(timer);
     }
-    return () => {
-      // Document title will be reset by App.tsx or other pages
-    };
   }, [collection, collectionSlug, navigate]);
 
 
@@ -66,7 +63,10 @@ const CollectionPage: React.FC = () => {
   const navigateWallpaperInCollection = useCallback((direction: 'prev' | 'next') => {
     if (!selectedWallpaper || collectionWallpapers.length === 0) return;
     const currentIndex = collectionWallpapers.findIndex(wp => wp.id === selectedWallpaper.id);
-    if (currentIndex === -1) return; 
+    if (currentIndex === -1) { // Should not happen if selectedWallpaper is from collectionWallpapers
+        if(collectionWallpapers.length > 0) openModalWithWallpaper(collectionWallpapers[0]);
+        return;
+    }
 
     let newIndex;
     if (direction === 'prev') {
@@ -76,6 +76,22 @@ const CollectionPage: React.FC = () => {
     }
     openModalWithWallpaper(collectionWallpapers[newIndex]);
   }, [selectedWallpaper, collectionWallpapers, openModalWithWallpaper]);
+
+  useEffect(() => {
+    if (isModalOpen && selectedWallpaper) {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          navigateWallpaperInCollection('prev');
+        } else if (event.key === 'ArrowRight') {
+          navigateWallpaperInCollection('next');
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isModalOpen, selectedWallpaper, navigateWallpaperInCollection]);
 
   if (!collection) {
     return (
@@ -99,6 +115,20 @@ const CollectionPage: React.FC = () => {
            {collection.tags && collection.tags.length > 0 && (
             <div className="mt-3">
               {collection.tags.map(tag => <TagPill key={tag} tag={tag} className="text-sm" />)}
+            </div>
+          )}
+          {collection.zipUrl && collection.zipSizeMB && (
+            <div className="mt-6">
+              <a
+                href={collection.zipUrl}
+                download={`${collection.slug}_collection.zip`}
+                className="inline-flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white font-bold py-2.5 px-5 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-75 text-sm"
+                aria-label={`Download all wallpapers in ${collection.name} collection as a ZIP file (${collection.zipSizeMB}MB)`}
+                title={`Download All (${collection.zipSizeMB}MB)`}
+              >
+                <DownloadIcon className="w-5 h-5 mr-2" />
+                Download All ({collection.zipSizeMB}MB)
+              </a>
             </div>
           )}
         </div>
@@ -160,7 +190,7 @@ const CollectionPage: React.FC = () => {
               <a
                 href={selectedWallpaper.fullUrl}
                 download={`${selectedWallpaper.title.replace(/\s+/g, '_')}_${selectedWallpaper.resolution}.jpg`}
-                className="inline-flex items-center justify-center bg-accent hover:bg-sky-600 dark:bg-accent-lt dark:hover:bg-sky-500 text-dark-text dark:text-text-on-accent-lt font-bold py-3 px-6 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-75"
+                className="inline-flex items-center justify-center bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-75"
                 aria-label={`Download ${selectedWallpaper.title}`}
               >
                 <DownloadIcon className="w-5 h-5 mr-2" />

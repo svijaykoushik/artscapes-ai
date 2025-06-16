@@ -25,4 +25,6 @@ export interface WallpaperCollection {
   coverWallpaperId: string; // ID of one of the wallpapers to use as a cover
   wallpaperIds: string[];
   tags?: string[];
+  zipUrl?: string; // Optional URL for downloading the entire collection as a zip
+  zipSizeMB?: number; // Optional size of the zip file in MB
 }

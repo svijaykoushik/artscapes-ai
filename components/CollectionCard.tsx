@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { WallpaperCollection, Wallpaper } from '../types';
@@ -52,8 +51,8 @@ const CollectionCard: React.FC<CollectionCardProps> = ({ collection, coverWallpa
             </div>
         )}
         <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
-            <h3 className="text-md font-semibold text-white group-hover:text-accent dark:group-hover:text-accent-lt transition-colors duration-200 truncate">{collection.name}</h3>
-            <p className="text-xs text-gray-300 group-hover:text-gray-100 transition-colors duration-200">{collection.wallpaperIds.length} Wallpapers</p>
+            <h3 className="text-md font-semibold text-white transition-colors duration-200 truncate">{collection.name}</h3>
+            <p className="text-xs text-gray-300 transition-colors duration-200">{collection.wallpaperIds.length} Wallpapers</p>
             {collection.tags && collection.tags.length > 0 && (
               <div className="mt-1 flex items-center flex-wrap">
                   <TagIcon className="w-3 h-3 mr-1 text-gray-300 flex-shrink-0" />

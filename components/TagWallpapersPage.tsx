@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Wallpaper } from '../types';
@@ -21,9 +22,8 @@ const TagWallpapersPage: React.FC = () => {
     if (tagName) {
       document.title = `Tagged: #${tagName} - ${APP_TITLE}`;
     } else {
-       // Should not happen if route is matched, but as a fallback:
       document.title = `Invalid Tag - ${APP_TITLE}`;
-      navigate('/', {replace: true}); // Or to /tags
+      navigate('/', {replace: true});
     }
   }, [tagName, navigate]);
 
@@ -54,7 +54,10 @@ const TagWallpapersPage: React.FC = () => {
   const navigateWallpaperInTagResults = useCallback((direction: 'prev' | 'next') => {
     if (!selectedWallpaper || taggedWallpapers.length === 0) return;
     const currentIndex = taggedWallpapers.findIndex(wp => wp.id === selectedWallpaper.id);
-    if (currentIndex === -1) return; 
+    if (currentIndex === -1) { // Should not happen if selectedWallpaper is from taggedWallpapers
+        if(taggedWallpapers.length > 0) openModalWithWallpaper(taggedWallpapers[0]);
+        return;
+    }
 
     let newIndex;
     if (direction === 'prev') {
@@ -65,7 +68,24 @@ const TagWallpapersPage: React.FC = () => {
     openModalWithWallpaper(taggedWallpapers[newIndex]);
   }, [selectedWallpaper, taggedWallpapers, openModalWithWallpaper]);
 
-  if (!tagName) { // Should be caught by useEffect navigation, but good for robustness
+  useEffect(() => {
+    if (isModalOpen && selectedWallpaper) {
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'ArrowLeft') {
+          navigateWallpaperInTagResults('prev');
+        } else if (event.key === 'ArrowRight') {
+          navigateWallpaperInTagResults('next');
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isModalOpen, selectedWallpaper, navigateWallpaperInTagResults]);
+
+
+  if (!tagName) { 
     return (
       <div className="container mx-auto px-4 py-12 text-center">
         <p className="text-xl text-muted-text-lt dark:text-muted-text">Tag name not provided.</p>

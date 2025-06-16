@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { NavItem } from '../types';
@@ -62,7 +61,7 @@ const Navbar: React.FC = () => {
 
 
   return (
-    <nav className="bg-primary-lt dark:bg-primary sticky top-0 z-40 border-b border-border-light dark:border-border-dark transition-colors duration-300">
+    <nav className="bg-primary-lt dark:bg-primary sticky top-0 z-40 border-b border-border-light dark:border-border-dark transition-colors duration-300 shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -93,7 +92,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-16 inset-x-0 bg-primary-lt dark:bg-primary z-30 p-2 space-y-1 sm:px-3 border-b border-border-light dark:border-border-dark transition-colors duration-300">
+        <div className="md:hidden absolute top-16 inset-x-0 bg-primary-lt dark:bg-primary z-30 p-2 space-y-1 sm:px-3 border-b border-border-light dark:border-border-dark shadow-lg transition-colors duration-300">
           {NAV_LINKS.map(renderNavLink)}
         </div>
       )}

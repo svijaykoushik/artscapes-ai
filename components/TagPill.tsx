@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 interface TagPillProps {
@@ -10,12 +9,18 @@ interface TagPillProps {
 
 const TagPill: React.FC<TagPillProps> = ({ tag, onClick, isActive, className = '' }) => {
   const baseClasses = "text-xs font-medium px-2 py-0.5 mr-1 mb-1 inline-block transition-all duration-200";
-  const activeClasses = "bg-accent text-dark-text dark:bg-accent-lt dark:text-text-on-accent-lt";
+  
+  // Default text color, background is inherited
+  const defaultTextClasses = "text-text-lt dark:text-light-text";
+
+  // Active classes: inherited background, text color sky-600
+  const activeClasses = "text-sky-600";
+  
+  // Inactive classes: default appearance, hover changes text color to sky-600
+  // Background is inherited.
   const inactiveClasses = `
-    bg-secondary text-light-text 
-    dark:bg-secondary-lt dark:text-text-lt 
-    hover:bg-accent hover:text-dark-text 
-    dark:hover:bg-accent-lt dark:hover:text-text-on-accent-lt
+    ${defaultTextClasses}
+    hover:text-sky-600 
   `;
   const clickableClasses = onClick ? "cursor-pointer" : "";
 

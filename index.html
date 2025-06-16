@@ -41,7 +41,7 @@
               // Light Theme
               'primary-lt': '#FFFFFF',   // White - Background
               'secondary-lt': '#F3F4F6', // Tailwind gray-100 - Card/Element Backgrounds
-              'accent-lt': '#0078D4',    // Metro Blue - Accent (can be same or adjusted)
+              'accent-lt': '#0078D4',    // Metro Blue - Accent (can be same or adjusted for light theme distinction if needed)
               'text-lt': '#111827',      // Tailwind gray-900 - Primary text on light
               'muted-text-lt': '#6B7280',// Tailwind gray-500 - Secondary text on light
               'text-on-accent-lt': '#FFFFFF', // White - Text on accent backgrounds
@@ -54,6 +54,9 @@
             },
           },
         },
+        plugins: [
+          // require('tailwind-scrollbar'), // For variants like scrollbar-thin. Note: 'require' may not work with CDN, esm.sh import is used.
+        ],
       }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,7 +65,6 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
-        /* Base background and text colors are now applied via Tailwind classes on the body tag */
       }
       .masonry-grid {
         column-gap: 0.25rem; 
@@ -96,32 +98,41 @@
           column-count: 6;
         }
       }
-      /* Metro Scrollbar styles - Themed */
-      /* For Dark Theme (default) */
+
+      /* Default Scrollbar styles (Applied for Light Theme and as base) */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
-      ::-webkit-scrollbar-track {
-        background: #2D2D2D; /* secondary color dark */
+      /* Specific for light theme if html.light is present, or default */
+      html.light ::-webkit-scrollbar-track, ::-webkit-scrollbar-track { 
+        background: #F3F4F6; /* secondary-lt color for light theme */
       }
-      ::-webkit-scrollbar-thumb {
-        background: #0078D4; /* accent color */
-        border-radius: 0px; /* Flat scrollbar */
+      html.light ::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+        background: #0078D4; /* accent-lt color for light theme */
+        border-radius: 0px; 
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #005A9E; /* Darker accent for hover */
+      html.light ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:hover {
+        background: #005A9E; /* Darker accent-lt for hover */
       }
 
-      /* For Light Theme */
-      html.light ::-webkit-scrollbar-track {
-        background: #F3F4F6; /* secondary-lt color */
+      /* Dark Theme Scrollbar overrides */
+      html.dark ::-webkit-scrollbar-track {
+        background: #2D2D2D; /* secondary color dark */
       }
-      html.light ::-webkit-scrollbar-thumb {
-        background: #0078D4; /* accent-lt color */
+      html.dark ::-webkit-scrollbar-thumb {
+        background: #0078D4; /* accent color */
+        border-radius: 0px; /* Ensure consistency or specify if different */
       }
-      html.light ::-webkit-scrollbar-thumb:hover {
-        background: #005A9E; /* Darker accent-lt for hover */
+      html.dark ::-webkit-scrollbar-thumb:hover {
+        background: #005A9E; /* Darker accent for hover */
+      }
+      
+      /* Tailwind scrollbar plugin custom styling (if needed, place after plugin registration in config) */
+      /* These are for element-specific scrollbars using the plugin */
+      .scrollbar-thin {
+        scrollbar-width: thin;
+        /* The plugin might use its own color mechanism or CSS variables if configured */
       }
     </style>
 <script type="importmap">
@@ -130,7 +141,8 @@
     "react": "https://esm.sh/react@^19.1.0",
     "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
     "react/": "https://esm.sh/react@^19.1.0/",
-    "react-router-dom": "https://esm.sh/react-router-dom@^6.25.0"
+    "react-router-dom": "https://esm.sh/react-router-dom@^6.25.0",
+    "tailwind-scrollbar": "https://esm.sh/tailwind-scrollbar@^3.1.0"
   }
 }
 </script>

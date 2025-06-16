@@ -17,7 +17,6 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       if (storedTheme) {
         return storedTheme;
       }
-      // Fallback to system preference if no stored theme
       return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
     return 'dark'; // Default for SSR or environments without window
@@ -25,12 +24,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   useEffect(() => {
     const root = window.document.documentElement;
+    // Remove both classes to ensure a clean state before applying the current theme class
+    root.classList.remove('dark', 'light');
+
     if (theme === 'dark') {
       root.classList.add('dark');
-      root.classList.remove('light'); // Ensure light class is removed
     } else {
-      root.classList.remove('dark');
-      root.classList.add('light'); // Add light class for specific light theme scrollbar styles
+      // For light theme, no specific class is needed for Tailwind's dark mode to be off.
+      // If '.light' class is needed for other specific CSS (like old scrollbars), it could be added.
+      // However, for pure Tailwind darkMode: 'class', absence of 'dark' means light.
+      // We will add 'light' class back if specific CSS like scrollbars require it and cannot be defaulted.
+      // For now, let's assume scrollbar CSS will be adjusted.
+      // To be safe and ensure specific `html.light` CSS rules (like scrollbars previously) work, we can add it.
+       root.classList.add('light'); // This ensures html.light css rules can be used if needed.
+                                   // If all CSS is managed by .dark presence/absence, this isn't strictly necessary for Tailwind.
     }
     localStorage.setItem('theme', theme);
   }, [theme]);

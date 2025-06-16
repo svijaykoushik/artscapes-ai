@@ -41,7 +41,7 @@ const AboutPage: React.FC = () => {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold text-text-lt dark:text-light-text mb-3 border-b-2 border-border-light dark:border-border-dark pb-2">About the Developer</h2>
           <p className="text-muted-text-lt dark:text-muted-text leading-relaxed mb-2">
-            This website was developed by The ArtScapes AI Team as a portfolio project. My role focused on full-stack development, encompassing:
+            This website was developed by Vijaykoushik, S. as a portfolio project. My role focused on full-stack development, encompassing:
           </p>
           <ul className="list-disc list-inside text-muted-text-lt dark:text-muted-text space-y-1 pl-4 mb-2">
             <li>Frontend Development: React, TypeScript, Tailwind CSS, state management, and component design.</li>
